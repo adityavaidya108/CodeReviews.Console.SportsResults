@@ -7,11 +7,9 @@ namespace SportsNotifierWorkerService;
 
 public class NotificationService : INotificationService
 {
-    private readonly IConfiguration _configuration;
-
-    public NotificationService(IConfiguration configuration)
+    public NotificationService()
     {
-        _configuration = configuration;
+        DotNetEnv.Env.Load();
     }
 
     public string GetInnerTextOrDefault(HtmlNodeCollection nodes, string defaultValue = "")
@@ -55,9 +53,9 @@ public class NotificationService : INotificationService
 
     public void SendEmail(string? toEmail, string? subject, string? body)
     {
-        var fromAddress = new MailAddress(_configuration["EmailDetails:EmailId"], _configuration["EmailDetails:Name"]);
+        var fromAddress = new MailAddress(DotNetEnv.Env.GetString("EmailId"), DotNetEnv.Env.GetString("Name"));
         var toAddress = new MailAddress(toEmail);
-        string fromPassword = _configuration["EmailDetails:AppPassword"];
+        string fromPassword = DotNetEnv.Env.GetString("AppPassword");
         var smtp = new SmtpClient
         {
             Host = "smtp.gmail.com",
@@ -80,7 +78,7 @@ public class NotificationService : INotificationService
     public void StartApp()
     {
         EmailDataFormat data = GetData();
-        string ?toEmail = _configuration["EmailDetails:RecipientEmail"];
+        string toEmail = DotNetEnv.Env.GetString("RecipientEmail");
         string subject = $"Game Summary Report - {data.Date}";
         string body = GenerateEmailBody(data);
         SendEmail(toEmail, subject, body);
