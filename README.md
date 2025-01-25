@@ -1,13 +1,13 @@
 # Sports Results Notifier
 
 ## Features
-* This is an application which reads sports data from a website once a day and send it to a specific e-mail address.
+* This application retrieves sports data from a website once a day and sends it to a specified email address.
 
-* You don't need any interaction with the program. It is a service that runs automatically.
+* No user interaction is required; the service runs automatically.
 
 * The data is collected from the Basketball Reference Website.
 
-* Agility Pack library is used for scrapping.
+* The Html Agility Pack library is used for web scraping.
 
 * Sample email sent by the app
 
